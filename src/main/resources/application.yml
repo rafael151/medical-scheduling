@@ -1,0 +1,24 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:h2:file:~/medical;MODE=MySQL;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    date-format: "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    default-property-inclusion: non_null
+    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      fail-on-null-for-primitives: true
