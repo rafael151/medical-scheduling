@@ -12,24 +12,23 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class DoctorGateway {
-    private final DoctorRepository repository;
+	private final DoctorRepository repository;
 
-    public Doctor save(final Doctor doctor){
-        return repository.save(doctor);
-    }
+	public Doctor save(final Doctor doctor) {
+		return repository.save(doctor);
+	}
 
-    public List<Doctor> findAll(){
-        return repository.findAll();
-    }
+	public List<Doctor> findAll() {
+		return repository.findAll();
+	}
 
-    public Doctor findById(final UUID id){
-        return repository.findById(id).orElseThrow(
-                () -> new DoctorNotFoundException(id)
-        );
-    }
+	public Doctor findById(final UUID id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new DoctorNotFoundException(id));
+	}
 
-    public void delete(final UUID id){
-        final var doctor = findById(id);
-        repository.delete(doctor);
-    }
+	public void delete(final UUID id) {
+		final var doctor = findById(id);
+		repository.delete(doctor);
+	}
 }

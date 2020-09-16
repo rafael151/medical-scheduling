@@ -1,17 +1,16 @@
 package com.challenge.eldorado.medical.scheduling.controller;
 
-import com.challenge.eldorado.medical.scheduling.controller.dto.DoctorDto;
-import com.challenge.eldorado.medical.scheduling.models.Doctor;
+import com.challenge.eldorado.medical.scheduling.controller.dto.AppointmentDto;
+import com.challenge.eldorado.medical.scheduling.models.Appointment;
 import com.challenge.eldorado.medical.scheduling.security.Authorized;
-import com.challenge.eldorado.medical.scheduling.usecase.DoctorDelete;
-import com.challenge.eldorado.medical.scheduling.usecase.DoctorFind;
-import com.challenge.eldorado.medical.scheduling.usecase.DoctorSave;
+import com.challenge.eldorado.medical.scheduling.usecase.AppointmentDelete;
+import com.challenge.eldorado.medical.scheduling.usecase.AppointmentFind;
+import com.challenge.eldorado.medical.scheduling.usecase.AppointmentSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,47 +24,39 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/doctors")
+@RequestMapping("/doctors/{doctorId}/appointments")
 @RequiredArgsConstructor
-public class DoctorController {
+public class AppointmentController {
 
-	private final DoctorSave doctorSave;
+	private final AppointmentSave appointmentSave;
 
-	private final DoctorFind doctorFind;
+	private final AppointmentFind appointmentFind;
 
-	private final DoctorDelete doctorDelete;
+	private final AppointmentDelete appointmentDelete;
 
 	@Authorized
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Doctor save(@Valid @RequestBody final DoctorDto doctorDto) {
-		return doctorSave.save(doctorDto.toModel());
+	public Appointment save(@PathVariable final UUID doctorId, @Valid @RequestBody final AppointmentDto appointmentDto) {
+		return appointmentSave.save(doctorId, appointmentDto.getCustomerId(), appointmentDto.getAppointmentDate());
 	}
 
 	@Authorized
 	@GetMapping
-	public List<Doctor> findAll() {
-		return doctorFind.findAll();
+	public List<Appointment> findAll(@PathVariable final UUID doctorId) {
+		return appointmentFind.findAll(doctorId);
 	}
 
 	@Authorized
 	@GetMapping("/{id}")
-	public Doctor findById(@PathVariable final UUID id) {
-		return doctorFind.findById(id);
-	}
-
-	@Authorized
-	@PatchMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable final UUID id, @RequestBody final DoctorDto doctorDto) {
-		final var doctor = doctorFind.findById(id);
-		doctorSave.save(doctorDto.toModel(doctor));
+	public Appointment findById(@PathVariable final UUID id) {
+		return appointmentFind.findById(id);
 	}
 
 	@Authorized
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable final UUID id) {
-		doctorDelete.delete(id);
+		appointmentDelete.delete(id);
 	}
 }

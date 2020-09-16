@@ -1,17 +1,17 @@
 package com.challenge.eldorado.medical.scheduling.usecase;
 
 import com.challenge.eldorado.medical.scheduling.gateway.DoctorGateway;
-import com.challenge.eldorado.medical.scheduling.models.Doctor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
-public class DoctorSave {
+public class DoctorDelete {
 	private final DoctorGateway gateway;
 
-	public Doctor save(final Doctor doctor) {
-		return gateway.save(doctor);
+	public void delete(final UUID id) {
+		gateway.delete(id);
 	}
-
 }

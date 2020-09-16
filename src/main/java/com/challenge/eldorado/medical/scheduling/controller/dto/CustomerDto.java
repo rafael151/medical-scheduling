@@ -1,6 +1,6 @@
 package com.challenge.eldorado.medical.scheduling.controller.dto;
 
-import com.challenge.eldorado.medical.scheduling.models.Doctor;
+import com.challenge.eldorado.medical.scheduling.models.Customer;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import static java.util.Objects.isNull;
 
 @Getter
 @RequiredArgsConstructor(onConstructor = @__(@JsonCreator))
-public class DoctorDto {
+public class CustomerDto {
 
 	@NotNull
 	@NotBlank
@@ -20,28 +20,24 @@ public class DoctorDto {
 
 	@NotNull
 	@NotBlank
-	final private String crm;
+	final private String email;
 
 	final private String specialty;
 
-	public Doctor toModel() {
-		return Doctor.builder()
+	public Customer toModel() {
+		return Customer.builder()
 				.name(this.name)
-				.crm(this.crm)
-				.specialty(this.specialty)
+				.email(this.email)
 				.build();
 	}
 
-	public Doctor toModel(final Doctor doctor) {
+	public Customer toModel(final Customer customer) {
 		if (!isNull(this.name)) {
-			doctor.setName(this.name);
+			customer.setName(this.name);
 		}
-		if (!isNull(this.crm)) {
-			doctor.setCrm(this.crm);
+		if (!isNull(this.email)) {
+			customer.setEmail(this.email);
 		}
-		if (!isNull(this.specialty)) {
-			doctor.setSpecialty(this.specialty);
-		}
-		return doctor;
+		return customer;
 	}
 }

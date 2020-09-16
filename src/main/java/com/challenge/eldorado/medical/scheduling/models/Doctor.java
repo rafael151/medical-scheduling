@@ -8,13 +8,14 @@ import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
 @Data
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @EqualsAndHashCode(of = {"name", "crm", "specialty"})
 public class Doctor {
+
     @Id
     private UUID id;
 

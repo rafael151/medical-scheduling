@@ -30,7 +30,7 @@ public class DoctorControllerTest {
     public void ShouldSaveDoctor(){
         final DoctorDto doctorDto = new DoctorDto(NAME, CRM, null);
 
-        final var response = restTemplate.postForEntity("/rest/doctors", doctorDto, Doctor.class);
+        final var response = restTemplate.postForEntity("/doctors", doctorDto, Doctor.class);
 
         assertThat(response.getStatusCode(), equalTo(CREATED));
         assertThat(response.getBody().getId(), not(nullValue()));
